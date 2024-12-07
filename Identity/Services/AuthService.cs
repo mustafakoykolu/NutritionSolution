@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Application.Exceptions;
 
 namespace Identity.Services
 {
@@ -31,14 +32,14 @@ namespace Identity.Services
 
             if (user == null)
             {
-                //throw new NotFoundException($"User with {request.Email} not found.", request.Email);
+                throw new NotFoundException($"{request.Email} email adresine sahip kullanıcı bulunamadı.", request.Email);
             }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
             if (result.Succeeded == false)
             {
-                //throw new BadRequestException($"Credentials for '{request.Email} aren't valid'.");
+                throw new BadRequestException($"Şifreniz yanlıştır, lütfen tekrar deneyiniz.");
             }
 
             JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
@@ -70,7 +71,7 @@ namespace Identity.Services
 
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, "Employee");
+                //await _userManager.AddToRoleAsync(user, "Employee");
                 return new RegistrationResponse() { UserId = user.Id };
             }
             else
@@ -80,9 +81,7 @@ namespace Identity.Services
                 {
                     str.AppendFormat("•{0}\n", err.Description);
                 }
-
-                throw new Exception(str.ToString());
-                //throw new BadRequestException($"{str}");
+                throw new BadRequestException($"{str}");
             }
         }
 
