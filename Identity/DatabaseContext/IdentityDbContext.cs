@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 
 namespace Identity.DatabaseContext
 {
-    public class IdContext : IdentityDbContext<ApplicationUser>
+    public class IdentityDbContext : IdentityDbContext<ApplicationUser>
     {
-        public IdContext(DbContextOptions<IdContext> options) : base(options)
+        public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options)
         {
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(IdContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(IdentityDbContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
 

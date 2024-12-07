@@ -11,7 +11,7 @@ namespace Persistence.Repositories
 {
     public class UserTypeRepository: GenericRepository<UserType>, IUserRepository
     {
-        public UserTypeRepository(UserDatabaseContext context):base(context) 
+        public UserTypeRepository(PersistenceDbContext context):base(context) 
         {
             
         }

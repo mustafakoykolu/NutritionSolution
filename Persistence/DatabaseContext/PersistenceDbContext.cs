@@ -10,15 +10,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.DatabaseContext
 {
-    public class UserDatabaseContext : DbContext
+    public class PersistenceDbContext : DbContext
     {
-        public UserDatabaseContext(DbContextOptions<UserDatabaseContext> options) : base(options)
+        public PersistenceDbContext(DbContextOptions<PersistenceDbContext> options) : base(options)
         {
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserDatabaseContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersistenceDbContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
 
@@ -33,7 +33,6 @@ namespace Persistence.DatabaseContext
                     entry.Entity.DateCreated = DateTime.Now;
                 }
             }
-
             return base.SaveChangesAsync(cancellationToken);
         }
     }

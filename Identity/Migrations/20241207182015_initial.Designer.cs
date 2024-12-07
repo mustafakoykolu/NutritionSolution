@@ -3,6 +3,7 @@ using System;
 using Identity.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,10 +11,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Identity.Migrations
 {
-    [DbContext(typeof(IdContext))]
-    partial class IdContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(IdentityDbContext))]
+    [Migration("20241207182015_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,44 +95,6 @@ namespace Identity.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "2a0de004-3b4b-43de-a052-ce053e87bb83",
-                            Email = "admin@localhost.com",
-                            EmailConfirmed = true,
-                            FirstName = "System",
-                            LastName = "Admin",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
-                            NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBGRWtOzCeX1wPzm6PE0SbEohylEk8f1w4BklgzJAle6GSFkDb9XviYAdpCA+8TEgQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "9a0bc3cc-3e9c-4d40-b2fb-0b7ae6ad5984",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@localhost.com"
-                        },
-                        new
-                        {
-                            Id = "9e224968-33e4-4652-b7b7-8574d048cdb9",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "9cf8a6af-8fc2-4f07-b0ca-e086c53e7201",
-                            Email = "user@localhost.com",
-                            EmailConfirmed = true,
-                            FirstName = "System",
-                            LastName = "User",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "USER@LOCALHOST.COM",
-                            NormalizedUserName = "USER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPp2BC0EYc+9tIogvxoi/cNY9nLGPD+eTLcPw+2HhG1IlacP80ppbHj9bx11DE7LPw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "0ab0720f-08a6-4ab1-a276-d470292a5555",
-                            TwoFactorEnabled = false,
-                            UserName = "user@localhost.com"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -156,20 +121,6 @@ namespace Identity.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "cac43a6e-f7bb-4448-baaf-1add431ccbbf",
-                            Name = "Employee",
-                            NormalizedName = "EMPLOYEE"
-                        },
-                        new
-                        {
-                            Id = "cbc43a8e-f7bb-4445-baaf-1add431ffbbf",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -257,18 +208,6 @@ namespace Identity.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            RoleId = "cbc43a8e-f7bb-4445-baaf-1add431ffbbf"
-                        },
-                        new
-                        {
-                            UserId = "9e224968-33e4-4652-b7b7-8574d048cdb9",
-                            RoleId = "cac43a6e-f7bb-4448-baaf-1add431ccbbf"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

@@ -17,15 +17,11 @@ namespace Persistence
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services,
        IConfiguration configuration)
         {
-            services.AddDbContext<UserDatabaseContext>(options => {
+            services.AddDbContext<PersistenceDbContext>(options => {
                 options.UseNpgsql(configuration.GetConnectionString("NutritionDbConnectionString"));
-                //options.UseSqlServer();
             });
-
-
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserRepository, UserTypeRepository>();
-
             return services;
         }
     }

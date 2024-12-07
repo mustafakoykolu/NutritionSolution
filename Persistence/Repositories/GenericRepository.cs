@@ -11,8 +11,8 @@ namespace Persistence.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
-        protected readonly UserDatabaseContext _context;
-        public GenericRepository(UserDatabaseContext context)
+        protected readonly PersistenceDbContext _context;
+        public GenericRepository(PersistenceDbContext context)
         {
             _context = context;
         }

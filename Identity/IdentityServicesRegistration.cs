@@ -23,14 +23,14 @@ namespace Identity
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
-
-            services.AddDbContext<IdContext>(options => {
-                options.UseNpgsql(configuration.GetConnectionString("NutritionDbConnectionString"));
+            services.AddDbContext<IdentityDbContext>(options => {
+                options.UseNpgsql(configuration.GetConnectionString("UsersDbConnectionString"));
             });
-
-
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<IdContext>().AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            })
+                .AddEntityFrameworkStores<IdentityDbContext>().AddDefaultTokenProviders();
 
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUserService, UserService>();
