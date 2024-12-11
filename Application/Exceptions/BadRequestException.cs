@@ -15,4 +15,5 @@ public class BadRequestException : Exception
     }
 
     public IDictionary<string, string[]> ValidationErrors { get; set; }
+    //public override string StackTrace => string.Empty;
 }
