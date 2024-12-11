@@ -14,8 +14,8 @@ namespace Api.Filters
                 badRequestException.Data["StackTrace"] = null;
                 context.Result = new BadRequestObjectResult(new
                 {
-                    error = badRequestException.Message,
-                    errors = badRequestException.ValidationErrors
+                    ExceptionErrorMessage = badRequestException.Message,
+                    ValidationErrorMessage = badRequestException.ValidationErrors
                 })
                 {
                     StatusCode = 400
