@@ -41,7 +41,8 @@ namespace Identity.Services
              
             if (user == null)
             {
-                throw new NotFoundException($"{request.Email} email adresine sahip kullanıcı bulunamadı.", request.Email);
+                var filter = request.Email == null ? request.UserName : request.Email;
+                throw new NotFoundException($"{filter} email adresine sahip kullanıcı bulunamadı.", filter);
             }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
@@ -116,6 +117,7 @@ namespace Identity.Services
                     throw new NotFoundException($"{request.UserName} email adresine sahip kullanıcı bulunamadı.", request.UserName);
                 }
             }           
+            //send email to user
             return true;
         }
 

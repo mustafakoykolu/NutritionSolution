@@ -41,7 +41,7 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-    await SeedData.Initialize(services, userManager);
+    //await SeedData.Initialize(services, userManager);
 }
 
 app.Run();
