@@ -3,6 +3,8 @@ using Infrastructure;
 using Application;
 using Identity;
 using Api.Filters;
+using Identity.Models;
+using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -34,5 +36,12 @@ app.UseCors("all");
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+    await SeedData.Initialize(services, userManager);
+}
 
 app.Run();
