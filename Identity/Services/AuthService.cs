@@ -29,8 +29,16 @@ namespace Identity.Services
 
         public async Task<AuthResponse> Login(AuthRequest request)
         {
-            var user = await _userManager.FindByEmailAsync(request.Email);
-
+            ApplicationUser user;
+            if(request.Email != null)
+            {
+                user = await _userManager.FindByEmailAsync(request.Email);
+            }
+            else
+            {
+                user = await _userManager.FindByNameAsync(request.UserName);
+            }
+             
             if (user == null)
             {
                 throw new NotFoundException($"{request.Email} email adresine sahip kullanıcı bulunamadı.", request.Email);
@@ -84,6 +92,31 @@ namespace Identity.Services
                 }
                 throw new BadRequestException($"{str}");
             }
+        }
+        public async Task<bool> ResetPassword(ResetPasswordRequest request)
+        {
+            ApplicationUser user;
+            if (request.Email != null)
+            {
+                user = await _userManager.FindByEmailAsync(request.Email);
+            }
+            else
+            {
+                user = await _userManager.FindByNameAsync(request.UserName);
+            }
+
+            if (user == null)
+            {
+                if(request.Email != null)
+                {
+                    throw new NotFoundException($"{request.Email} email adresine sahip kullanıcı bulunamadı.", request.Email);
+                }
+                else
+                {
+                    throw new NotFoundException($"{request.UserName} email adresine sahip kullanıcı bulunamadı.", request.UserName);
+                }
+            }           
+            return true;
         }
 
         private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)

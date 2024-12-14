@@ -29,5 +29,11 @@ namespace Api.Controllers
         {
             return Ok(await _authenticationService.Register(request));
         }
+        [AllowAnonymous]
+        [HttpPost("ResetPassword")]
+        public async Task<ActionResult<bool>> ResetPassword(ResetPasswordRequest request)
+        {
+            return Ok(await _authenticationService.ResetPassword(request));
+        }
     }
 }

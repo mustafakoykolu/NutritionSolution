@@ -11,6 +11,8 @@ namespace Application.Contracts.Identity
     {
         Task<AuthResponse> Login(AuthRequest request);
         Task<RegistrationResponse> Register(RegistrationRequest request);
+        Task<bool> ResetPassword(ResetPasswordRequest request);
+
 
     }
 }
