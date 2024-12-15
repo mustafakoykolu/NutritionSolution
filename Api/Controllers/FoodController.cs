@@ -24,7 +24,7 @@ namespace Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetFoodById/{id}")]
+        [HttpGet("GetFoodById")]
         public async Task<ActionResult<FoodsDto>> GetFoodById(int id)
         {
             var result = await _mediator.Send(new GetFoodByIdQuery() { Id = id });
