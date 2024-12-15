@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
-using Domain;
-using Domain.Common;
+﻿using Domain.Common;
+using Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.DatabaseContext
@@ -21,6 +15,8 @@ namespace Persistence.DatabaseContext
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersistenceDbContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<Foods> Foods { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
