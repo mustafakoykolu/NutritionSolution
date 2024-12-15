@@ -1,4 +1,5 @@
 ﻿using Application.Contracts.Persistence;
+using Application.Exceptions;
 using Domain.Common;
 using Microsoft.EntityFrameworkCore;
 using Persistence.DatabaseContext;
@@ -32,7 +33,8 @@ namespace Persistence.Repositories
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _dbSet.FindAsync(id);
+            var data = await _dbSet.FindAsync(id);
+            return data ?? throw new BadRequestException($"{id} could not found in db");
         }
 
         public Task UpdateAsync(T entity)
