@@ -44,5 +44,7 @@ namespace Application.Features.Foods.Dtos
         public string ImagePath { get; set; } = string.Empty;
         public string Benefits { get; set; } = string.Empty;
         public string History { get; set; } = string.Empty;
+        public float Portion { get; set; }
+        public string PortionUnit { get; set; } = string.Empty;
     }
 }

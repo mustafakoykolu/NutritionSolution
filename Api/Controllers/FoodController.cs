@@ -1,5 +1,7 @@
-﻿using Application.Features.Foods.Dtos;
+﻿using Application.Features.Foods.Commands;
+using Application.Features.Foods.Dtos;
 using Application.Features.Foods.Queries;
+using Application.Features.UserType.Commands.CreateUserType;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +30,12 @@ namespace Api.Controllers
         public async Task<ActionResult<FoodsDto>> GetFoodById(int id)
         {
             var result = await _mediator.Send(new GetFoodByIdQuery() { Id = id });
+            return Ok(result);
+        }
+        [HttpPost("CreateFood")]
+        public async Task<ActionResult<FoodsDto>> CreateFood(CreateFoodCommand createFoodRq)
+        {
+            var result = await _mediator.Send(createFoodRq);
             return Ok(result);
         }
     }

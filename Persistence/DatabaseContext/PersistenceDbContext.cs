@@ -16,7 +16,7 @@ namespace Persistence.DatabaseContext
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<Foods> Foods { get; set; }
+        public DbSet<Food> Foods { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

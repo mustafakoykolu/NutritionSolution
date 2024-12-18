@@ -8,7 +8,7 @@ namespace Application.Features.Foods.MappingProfiles
     {
         public MappingProfile()
         {
-            CreateMap<Domain.Entity.Foods, FoodsDto>();
+            CreateMap<Domain.Entity.Food, FoodsDto>();
         }
     }
 }

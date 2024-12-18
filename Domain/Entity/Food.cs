@@ -2,7 +2,7 @@
 
 namespace Domain.Entity
 {
-    public class Foods : BaseEntity
+    public class Food : BaseEntity
     {
         public string Name { get; set; } = string.Empty;
         public float KCal { get; set; }
@@ -40,9 +40,7 @@ namespace Domain.Entity
         public string ImagePath { get; set; } = string.Empty;
         public string Benefits { get; set; } = string.Empty;
         public string History { get; set; } = string.Empty;
-
-
-
-
+        public float Portion { get; set; }
+        public string PortionUnit {  get; set; } = string.Empty ;
     }
 }

@@ -7,10 +7,10 @@ namespace Application.Features.Foods.Queries
 {
     public class GetFoodsQueryHandler : IRequestHandler<GetFoodsQuery, List<FoodsDto>>
     {
-        private readonly IGenericRepository<Domain.Entity.Foods> _foodsRepository;
+        private readonly IGenericRepository<Domain.Entity.Food> _foodsRepository;
         private readonly IMapper _mapper;
 
-        public GetFoodsQueryHandler(IGenericRepository<Domain.Entity.Foods> foodsRepository, IMapper mapper)
+        public GetFoodsQueryHandler(IGenericRepository<Domain.Entity.Food> foodsRepository, IMapper mapper)
         {
             _foodsRepository = foodsRepository;
             _mapper = mapper;
