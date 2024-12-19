@@ -35,9 +35,20 @@ namespace Persistence.Repositories
             }
         }
 
-        public Task DeleteAsync(T entity)
+        public async Task<int> DeleteAsync(T entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _dbSet.Remove(entity);
+                await _context.SaveChangesAsync();
+                return entity.Id;
+            }
+            catch (DbUpdateException ex)//todo: exception kotnrol edilecek.
+            {
+                var innerException = ex.InnerException?.Message;
+                throw new Exception($"An error occurred while saving the entity changes: {innerException}", ex);
+            }
+
         }
 
         public async Task<T> GetByIdAsync(int id)
@@ -46,9 +57,19 @@ namespace Persistence.Repositories
             return data ?? throw new BadRequestException($"{id} could not found in db");
         }
 
-        public Task UpdateAsync(T entity)
+        public async Task<int> UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Update(entity);
+                await _context.SaveChangesAsync();
+                return entity.Id;
+            }
+            catch (DbUpdateException ex)//todo: exception kotnrol edilecek.
+            {
+                var innerException = ex.InnerException?.Message;
+                throw new Exception($"An error occurred while saving the entity changes: {innerException}", ex);
+            }
         }
 
         async Task<List<T>> IGenericRepository<T>.GetAllAsync()

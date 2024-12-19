@@ -10,8 +10,8 @@ namespace Application.Contracts.Persistence
     {
         Task<T> GetByIdAsync(int id);
         Task<int> CreateAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task DeleteAsync(T entity);
+        Task<int> UpdateAsync(T entity);
+        Task<int> DeleteAsync(T entity);
         Task<List<T>> GetAllAsync();
     }
 }

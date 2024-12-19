@@ -22,7 +22,6 @@ namespace Persistence
             });
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserRepository, UserTypeRepository>();
-            services.AddScoped<IFoodRepository, FoodRepository>();
 
 
             return services;
