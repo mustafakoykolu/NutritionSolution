@@ -1,4 +1,5 @@
 ﻿using Application.Contracts.Persistence;
+using Application.Features.Foods.Dtos;
 using Application.Features.UserType.Commands.CreateUserType;
 using AutoMapper;
 using Domain.Entity;
@@ -15,9 +16,9 @@ namespace Application.Features.Foods.Commands
     {
        
         private readonly IMapper _mapper;
-        private readonly IFoodRepository _foodRepository;
+        private readonly IGenericRepository<Domain.Entity.Food> _foodRepository;
 
-        public CreateFoodCommandHandler(IMapper mapper, IFoodRepository foodRepository)
+        public CreateFoodCommandHandler(IMapper mapper, IGenericRepository<Domain.Entity.Food> foodRepository)
         {
             _mapper = mapper;
             _foodRepository = foodRepository;
