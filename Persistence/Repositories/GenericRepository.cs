@@ -20,10 +20,19 @@ namespace Persistence.Repositories
             _context = context;
             _dbSet = context.Set<T>();
         }
-        public async Task CreateAsync(T entity)
+        public async Task<int> CreateAsync(T entity)
         {
-            await _context.AddAsync(entity);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.AddAsync(entity);
+                await _context.SaveChangesAsync();
+                return entity.Id;
+            }
+            catch (DbUpdateException ex)
+            {
+                var innerException = ex.InnerException?.Message;
+                throw new Exception($"An error occurred while saving the entity changes: {innerException}", ex);
+            }
         }
 
         public Task DeleteAsync(T entity)
