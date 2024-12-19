@@ -1,22 +1,36 @@
-using Persistence;
+﻿using Persistence;
 using Infrastructure;
 using Application;
 using Identity;
 using Api.Filters;
 using Identity.Models;
 using Microsoft.AspNetCore.Identity;
+using Serilog;
+using Serilog.Sinks.Elasticsearch;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Global Logger Ayarı
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://localhost:9200"))
+    {
+        AutoRegisterTemplate = true,
+        IndexFormat = "logs-{0:yyyy.MM.dd}"
+    })
+    .Enrich.FromLogContext()
+    .MinimumLevel.Information()
+    .CreateLogger();
+
+//default serilog middleware.
+//builder.Host.UseSerilog();
 
 builder.Services.AddControllers(
-    options => { 
+    options =>
+    {
         options.Filters.Add<CustomExceptionFilter>();
-    }
-);
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+    });
 
+builder.Services.AddOpenApi();
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
@@ -24,24 +38,17 @@ builder.Services.AddIdentityServices(builder.Configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
+app.UseMiddleware<Api.Middleware.RequestResponseLoggingMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
 app.UseHttpsRedirection();
-
 app.UseCors("all");
 app.UseAuthorization();
-
 app.MapControllers();
-
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-    //await SeedData.Initialize(services, userManager);
-}
 
 app.Run();
