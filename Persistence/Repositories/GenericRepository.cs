@@ -28,7 +28,7 @@ namespace Persistence.Repositories
                 await _context.SaveChangesAsync();
                 return entity.Id;
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException ex)//todo: exception kotnrol edilecek.
             {
                 var innerException = ex.InnerException?.Message;
                 throw new Exception($"An error occurred while saving the entity changes: {innerException}", ex);
