@@ -28,6 +28,8 @@ namespace Persistence.DatabaseContext
                 {
                     entry.Entity.DateCreated = DateTime.Now;
                 }
+                entry.Entity.CreatedBy = "User";
+                entry.Entity.ModifiedBy = "User";
             }
             return base.SaveChangesAsync(cancellationToken);
         }
