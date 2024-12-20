@@ -33,7 +33,7 @@ namespace Api.Controllers
             return Ok(result);
         }
         [HttpPost("CreateFood")]
-        public async Task<ActionResult<FoodsDto>> CreateFood(CreateFoodCommand createFoodRq)
+        public async Task<ActionResult<FoodsDto>> CreateFood([FromForm]CreateFoodCommand createFoodRq)
         {
             var result = await _mediator.Send(createFoodRq);
             return Ok(result);

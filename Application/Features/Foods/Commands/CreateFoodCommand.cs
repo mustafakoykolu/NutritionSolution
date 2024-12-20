@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,5 +48,6 @@ namespace Application.Features.Foods.Commands
         public string History { get; set; } = string.Empty;
         public float Portion { get; set; }
         public string PortionUnit { get; set; } = string.Empty;
+        public IFormFile Image { get; set; }
     }
 }

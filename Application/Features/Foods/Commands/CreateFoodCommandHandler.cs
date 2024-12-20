@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Application.Features.Foods.Commands
 {
@@ -25,10 +26,28 @@ namespace Application.Features.Foods.Commands
         }
         public async Task<int> Handle(CreateFoodCommand request, CancellationToken cancellationToken)
         {
+            //add image
+            var uploadPath = Path.Combine("C:\\", "images");
+
+            // Create the directory if it doesn't exist
+            if (!Directory.Exists(uploadPath))
+            {
+                Directory.CreateDirectory(uploadPath);
+            }
+
+            // Combine the upload path with the file name
+            var fileExtension = Path.GetExtension(request.Image.FileName);
+            request.ImagePath = Path.Combine(uploadPath, $"{Guid.NewGuid()}{fileExtension}");
+                
+            // Save the file to the directory
+            using (var stream = new FileStream(request.ImagePath, FileMode.Create))
+            {
+                await request.Image.CopyToAsync(stream);
+            }
+
             var food = _mapper.Map<Food>(request);
             await _foodRepository.CreateAsync(food);
             return food.Id;
-            throw new NotImplementedException();
         }
 
     }
