@@ -22,6 +22,21 @@ builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("all", builder =>
+    {
+        // CORS izin verilen domain'ler
+        builder.WithOrigins(
+                "https://fitlezzet.com",
+                "http://fitlezzet.com",
+                "https://www.fitlezzet.com",
+                "http://www.fitlezzet.com"
+            )
+            .AllowAnyHeader() 
+            .AllowAnyMethod(); 
+    });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,24 +45,6 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("all", builder =>
-    {
-        builder.WithOrigins("https://fitlezzet.com")
-               .AllowAnyHeader()
-               .AllowAnyMethod();
-        builder.WithOrigins("http://fitlezzet.com")
-               .AllowAnyHeader()
-               .AllowAnyMethod();
-        builder.WithOrigins("https://www.fitlezzet.com")
-               .AllowAnyHeader()
-               .AllowAnyMethod();
-        builder.WithOrigins("http://www.fitlezzet.com")
-               .AllowAnyHeader()
-               .AllowAnyMethod();
-    });
-});
 app.UseHttpsRedirection();
 
 app.UseCors("all");
