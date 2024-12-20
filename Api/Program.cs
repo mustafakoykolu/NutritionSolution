@@ -30,6 +30,24 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("all", builder =>
+    {
+        builder.WithOrigins("https://fitlezzet.com")
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+        builder.WithOrigins("http://fitlezzet.com")
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+        builder.WithOrigins("https://www.fitlezzet.com")
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+        builder.WithOrigins("http://www.fitlezzet.com")
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
 app.UseHttpsRedirection();
 
 app.UseCors("all");
