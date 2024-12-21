@@ -37,8 +37,9 @@ namespace Application.Features.Foods.Commands
 
             // Combine the upload path with the file name
             var fileExtension = Path.GetExtension(request.Image.FileName);
-            request.ImagePath = $"{Guid.NewGuid()}{fileExtension}";
-            var uploadPath = Path.Combine(uploadFolder, $"{Guid.NewGuid()}{fileExtension}");
+            var imageGuid = Guid.NewGuid();
+            request.ImagePath = $"{imageGuid}{fileExtension}";
+            var uploadPath = Path.Combine(uploadFolder, $"{imageGuid}{fileExtension}");
              
             // Save the file to the directory
             using (var stream = new FileStream(uploadPath, FileMode.Create))
