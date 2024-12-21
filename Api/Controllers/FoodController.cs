@@ -2,6 +2,7 @@
 using Application.Features.Foods.Dtos;
 using Application.Features.Foods.Queries;
 using Application.Features.UserType.Commands.CreateUserType;
+using Domain.Common;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +21,9 @@ namespace Api.Controllers
         }
 
         [HttpGet("GetFoods")]
-        public async Task<ActionResult<List<FoodsDto>>> GetFoods()
+        public async Task<ActionResult<FoodsDtoPaging>> GetFoods([FromQuery]GetFoodsQuery getFoodsQuery)
         {
-            var result = await _mediator.Send(new GetFoodsQuery());
+            var result = await _mediator.Send(getFoodsQuery);
             return Ok(result);
         }
 
@@ -36,6 +37,12 @@ namespace Api.Controllers
         public async Task<ActionResult<FoodsDto>> CreateFood([FromForm]CreateFoodCommand createFoodRq)
         {
             var result = await _mediator.Send(createFoodRq);
+            return Ok(result);
+        }
+        [HttpGet("SearchFood")]
+        public async Task<ActionResult<FoodsDto>> SearchFood([FromQuery] SearchFoodQuery searchFoodQuery)
+        {
+            var result = await _mediator.Send(searchFoodQuery);
             return Ok(result);
         }
     }

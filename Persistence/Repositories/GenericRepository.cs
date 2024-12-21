@@ -83,5 +83,15 @@ namespace Persistence.Repositories
             var objectList = await _dbSet.ToListAsync();
             return objectList;
         }
+        async Task<List<T>> IGenericRepository<T>.GetPagedAsync(int pageNumber, int pageSize)
+        {
+            var objectList = await _dbSet.Skip((pageNumber-1)*pageSize).Take(pageSize).ToListAsync();
+            return objectList;
+        }
+        async Task<int> IGenericRepository<T>.GetCountAsync()
+        {
+            var count = await _dbSet.CountAsync();
+            return count;
+        }
     }
 }

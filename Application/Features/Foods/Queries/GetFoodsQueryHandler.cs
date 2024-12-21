@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.Features.Foods.Queries
 {
-    public class GetFoodsQueryHandler : IRequestHandler<GetFoodsQuery, List<FoodsDto>>
+    public class GetFoodsQueryHandler : IRequestHandler<GetFoodsQuery, FoodsDtoPaging>
     {
         private readonly IGenericRepository<Domain.Entity.Food> _foodsRepository;
         private readonly IMapper _mapper;
@@ -16,11 +16,13 @@ namespace Application.Features.Foods.Queries
             _mapper = mapper;
         }
 
-        public async Task<List<FoodsDto>> Handle(GetFoodsQuery request, CancellationToken cancellationToken)
+        public async Task<FoodsDtoPaging> Handle(GetFoodsQuery request, CancellationToken cancellationToken)
         {
-            var foods = await _foodsRepository.GetAllAsync();
+            var totalCount = await _foodsRepository.GetCountAsync();
+            var foods = await _foodsRepository.GetPagedAsync(request.PageNumber, request.PageSize);
             var foodList= _mapper.Map<List<FoodsDto>>(foods);
-            return foodList;
+            var result = new FoodsDtoPaging() { Data = foodList, TotalCount= totalCount,DataCount=foodList.Count, PageNumber=request.PageNumber,PageSize=request.PageSize};
+            return result;
         }
     }
 }

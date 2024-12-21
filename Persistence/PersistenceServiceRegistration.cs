@@ -20,7 +20,7 @@ namespace Persistence
             services.AddScoped<IUserRepository, UserTypeRepository>();
             services.AddScoped<IUnitOfWork, RepositoryTransactionUnitOfWork>();
             services.AddScoped<IMealRepository, MealRepository>();
-
+            services.AddScoped<IFoodRepository, FoodRepository>();
 
             return services;
         }

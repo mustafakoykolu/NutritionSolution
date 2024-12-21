@@ -54,12 +54,12 @@ app.UseAuthorization();
 app.MapControllers();
 
 //resim
-app.UseStaticFiles();  
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(@"C:\images"), 
-    RequestPath = "/images"  
-});
+//app.UseStaticFiles();  
+//app.UseStaticFiles(new StaticFileOptions
+//{
+//    FileProvider = new PhysicalFileProvider(@"C:\images"), 
+//    RequestPath = "/images"  
+//});
 
 using (var scope = app.Services.CreateScope())
 {

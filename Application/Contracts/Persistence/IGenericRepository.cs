@@ -8,5 +8,7 @@
         Task<int> UpdateAsync(T entity);
         Task<int> DeleteAsync(T entity);
         Task<List<T>> GetAllAsync();
+        Task<List<T>> GetPagedAsync(int pageNumber, int pageSize);
+        Task<int> GetCountAsync();
     }
 }

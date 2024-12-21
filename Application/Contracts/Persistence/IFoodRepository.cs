@@ -11,5 +11,8 @@ namespace Application.Contracts.Persistence
     public interface IFoodRepository : IGenericRepository<Food>
     {
         //custom methods
+        Task<List<Food>> SearchByName(string userName, int pageNumber, int pageSize);
+        Task<int> SearchByNameCount(string userName, int pageNumber, int pageSize);
+
     }
 }
