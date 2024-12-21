@@ -20,6 +20,27 @@ namespace Application.Features.Meals.Commands
 
         public async Task<int> Handle(CreateMealCommand request, CancellationToken cancellationToken)
         {
+            //add image
+            var uploadFolder = Path.Combine("C:\\","meals","images");
+
+            // Create the directory if it doesn't exist
+            if (!Directory.Exists(uploadFolder))
+            {
+                Directory.CreateDirectory(uploadFolder);
+            }
+
+            // Combine the upload path with the file name
+            var fileExtension = Path.GetExtension(request.Image.FileName);
+            var imageGuid = Guid.NewGuid();
+            request.ImagePath = $"{imageGuid}{fileExtension}";
+            var uploadPath = Path.Combine(uploadFolder, $"{imageGuid}{fileExtension}");
+
+            // Save the file to the directory
+            using (var stream = new FileStream(uploadPath, FileMode.Create))
+            {
+                await request.Image.CopyToAsync(stream);
+            }
+
             await _unitOfWork.BeginTransactionAsync();
 
             try
@@ -34,6 +55,7 @@ namespace Application.Features.Meals.Commands
             catch (Exception ex)
             {
                 await _unitOfWork.RollbackTransactionAsync();
+                //todo: delete the image.
                 throw new ApplicationException("An error occurred while creating the meal.", ex);
             }
         }
