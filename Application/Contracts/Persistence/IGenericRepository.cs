@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.Contracts.Persistence
+﻿namespace Application.Contracts.Persistence
 {
     public interface IGenericRepository<T> where T : class
     {
+        IQueryable<T> QueryAsync();
         Task<T> GetByIdAsync(int id);
         Task<int> CreateAsync(T entity);
         Task<int> UpdateAsync(T entity);

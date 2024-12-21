@@ -28,7 +28,6 @@ namespace Application.Features.Foods.Commands
             var food = _mapper.Map<Food>(request);
             await _foodRepository.CreateAsync(food);
             return food.Id;
-            throw new NotImplementedException();
         }
 
     }

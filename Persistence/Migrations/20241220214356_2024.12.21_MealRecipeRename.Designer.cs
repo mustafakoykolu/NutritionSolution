@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Persistence.DatabaseContext;
@@ -11,9 +12,11 @@ using Persistence.DatabaseContext;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(PersistenceDbContext))]
-    partial class PersistenceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241220214356_2024.12.21_MealRecipeRename")]
+    partial class _20241221_MealRecipeRename
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -258,26 +261,17 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entity.MealIngredient", b =>
                 {
-                    b.HasOne("Domain.Entity.Food", "Food")
+                    b.HasOne("Domain.Entity.Food", null)
                         .WithMany()
                         .HasForeignKey("FoodId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entity.Meal", "Meal")
-                        .WithMany("MealIngredients")
+                    b.HasOne("Domain.Entity.Meal", null)
+                        .WithMany()
                         .HasForeignKey("MealId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Food");
-
-                    b.Navigation("Meal");
-                });
-
-            modelBuilder.Entity("Domain.Entity.Meal", b =>
-                {
-                    b.Navigation("MealIngredients");
                 });
 #pragma warning restore 612, 618
         }

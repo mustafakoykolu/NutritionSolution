@@ -13,9 +13,9 @@ namespace Domain.Common
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public DateTime? DateCreated { get; set; }
-        public string? CreatedBy { get; set; }
-        public DateTime? DateModified { get; set; }
-        public string? ModifiedBy { get; set; }
+        public DateTime DateCreated { get; set; }= DateTime.Now;
+        public string CreatedBy { get; set; } = string.Empty;
+        public DateTime DateModified { get; set; } = DateTime.Now;
+        public string ModifiedBy { get; set; } = string.Empty;
     }
 }

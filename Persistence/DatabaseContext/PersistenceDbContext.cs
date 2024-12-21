@@ -14,9 +14,34 @@ namespace Persistence.DatabaseContext
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersistenceDbContext).Assembly);
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Food>()
+                .HasIndex(f => f.Name)
+                .IsUnique();
+
+            modelBuilder.Entity<MealIngredient>()
+                .HasKey(MealRecipe => new { MealRecipe.MealId, MealRecipe.FoodId }); // mealId and foodId are composite primary key
+
+            // MealRecipe - Foreign Key Relationships
+            modelBuilder.Entity<Meal>()
+                .HasMany(m => m.MealIngredients) // Meal'in navigation property'si
+                .WithOne(mi => mi.Meal) // MealIngredient'in navigation property'si
+                .HasForeignKey(mi => mi.MealId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MealIngredient>()
+                .HasOne(mi => mi.Food) // MealIngredient'in Food ile olan iliskisi
+                .WithMany() // Food'un navigation property’si yoksa bu bos kalabilir.
+                .HasForeignKey(mi => mi.FoodId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            base.OnModelCreating(modelBuilder);
+
         }
 
-        public DbSet<Food> Foods { get; set; }
+        public DbSet<Food> Foods { get; set; } = null!;
+        public DbSet<Meal> Meals { get; set; } = null!;
+        public DbSet<MealIngredient> MealRecipes { get; set; } = null!;
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
