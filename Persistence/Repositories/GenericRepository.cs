@@ -14,12 +14,13 @@ namespace Persistence.Repositories
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
         protected readonly PersistenceDbContext _context;
-        private readonly DbSet<T> _dbSet;
+        protected readonly DbSet<T> _dbSet;
         public GenericRepository(PersistenceDbContext context)
         {
             _context = context;
             _dbSet = context.Set<T>();
         }
+
         public async Task<int> CreateAsync(T entity)
         {
             try
@@ -55,6 +56,11 @@ namespace Persistence.Repositories
         {
             var data = await _dbSet.FindAsync(id);
             return data ?? throw new BadRequestException($"{id} could not found in db");
+        }
+
+        public IQueryable<T> QueryAsync()
+        {
+             return _dbSet.AsQueryable();
         }
 
         public async Task<int> UpdateAsync(T entity)

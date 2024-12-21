@@ -4,11 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.DatabaseContext;
 using Persistence.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Persistence.UnitOfWorks;
 
 namespace Persistence
 {
@@ -22,6 +18,8 @@ namespace Persistence
             });
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserRepository, UserTypeRepository>();
+            services.AddScoped<IUnitOfWork, RepositoryTransactionUnitOfWork>();
+            services.AddScoped<IMealRepository, MealRepository>();
 
 
             return services;

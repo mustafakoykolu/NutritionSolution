@@ -20,11 +20,6 @@ namespace Application.Features.Foods.Queries
         public async Task<FoodsDto> Handle(GetFoodByIdQuery request, CancellationToken cancellationToken)
         {
             var food = await _foodRepository.GetByIdAsync(request.Id);
-            if (food == null)
-            {
-                throw new NotFoundException(nameof(Foods), request.Id);
-            }
-
             return _mapper.Map<FoodsDto>(food);
         }
     }
