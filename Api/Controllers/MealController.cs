@@ -27,7 +27,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("CreateMeal")]
-        public async Task<ActionResult<MealDto>> CreateMeal(CreateMealCommand createMealRq)
+        public async Task<ActionResult<MealDto>> CreateMeal([FromForm]CreateMealCommand createMealRq)
         {
             var result = await _mediator.Send(createMealRq);
             return Ok(result);
