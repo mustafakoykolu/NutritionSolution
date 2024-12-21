@@ -27,7 +27,7 @@ namespace Application.Features.Foods.Commands
         public async Task<int> Handle(CreateFoodCommand request, CancellationToken cancellationToken)
         {
             //add image
-            var uploadFolder = Path.Combine("C:\\", "images");
+            var uploadFolder = Path.Combine("C:\\", "images","foods");
 
             // Create the directory if it doesn't exist
             if (!Directory.Exists(uploadFolder))
