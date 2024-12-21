@@ -13,6 +13,7 @@ namespace Persistence.Repositories
         {
             var meal= await _dbSet
                 .Include(m => m.MealIngredients)
+                .ThenInclude(mi => mi.Food)
                 .ToListAsync();
             return meal;
         }

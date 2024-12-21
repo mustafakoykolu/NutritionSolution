@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.Features.Foods.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,6 @@ namespace Application.Features.Meals.Dtos
         public int FoodId { get; set; }
         public float Quantity { get; set; }
         public string Unit { get; set; } = string.Empty;
+        public FoodsDto? Food { get; set; }
     }
 }
