@@ -5,11 +5,12 @@ using Identity;
 using Api.Filters;
 using Identity.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.FileProviders;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers(
+builder.Services.AddControllersWithViews(
     options => { 
         options.Filters.Add<CustomExceptionFilter>();
     }
@@ -51,6 +52,14 @@ app.UseCors("all");
 app.UseAuthorization();
 
 app.MapControllers();
+
+//resim
+app.UseStaticFiles();  
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(@"C:\images"), 
+    RequestPath = "/images"  
+});
 
 using (var scope = app.Services.CreateScope())
 {

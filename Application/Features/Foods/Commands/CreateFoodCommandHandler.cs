@@ -27,20 +27,21 @@ namespace Application.Features.Foods.Commands
         public async Task<int> Handle(CreateFoodCommand request, CancellationToken cancellationToken)
         {
             //add image
-            var uploadPath = Path.Combine("C:\\", "images");
+            var uploadFolder = Path.Combine("C:\\", "images");
 
             // Create the directory if it doesn't exist
-            if (!Directory.Exists(uploadPath))
+            if (!Directory.Exists(uploadFolder))
             {
-                Directory.CreateDirectory(uploadPath);
+                Directory.CreateDirectory(uploadFolder);
             }
 
             // Combine the upload path with the file name
             var fileExtension = Path.GetExtension(request.Image.FileName);
-            request.ImagePath = Path.Combine(uploadPath, $"{Guid.NewGuid()}{fileExtension}");
-                
+            request.ImagePath = $"{Guid.NewGuid()}{fileExtension}";
+            var uploadPath = Path.Combine(uploadFolder, $"{Guid.NewGuid()}{fileExtension}");
+             
             // Save the file to the directory
-            using (var stream = new FileStream(request.ImagePath, FileMode.Create))
+            using (var stream = new FileStream(uploadPath, FileMode.Create))
             {
                 await request.Image.CopyToAsync(stream);
             }

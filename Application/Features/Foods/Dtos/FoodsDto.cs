@@ -8,6 +8,7 @@ namespace Application.Features.Foods.Dtos
 {
     public class FoodsDto
     {
+        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public float KCal { get; set; }
         public float Protein { get; set; }
