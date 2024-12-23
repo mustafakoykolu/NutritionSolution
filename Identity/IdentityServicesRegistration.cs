@@ -24,7 +24,7 @@ namespace Identity
         {
             services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
             services.AddDbContext<IdentityDbContext>(options => {
-                options.UseNpgsql(configuration.GetConnectionString("UsersDbConnectionString"));
+                options.UseNpgsql(configuration.GetConnectionString("UsersDbConnectionString"), npgsqlOptions => npgsqlOptions.CommandTimeout(180));
             });
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {

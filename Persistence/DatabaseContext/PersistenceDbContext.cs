@@ -13,49 +13,56 @@ namespace Persistence.DatabaseContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersistenceDbContext).Assembly);
-            base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Food>()
-                .HasIndex(f => f.Name)
-                .IsUnique();
+            // Relationships
+            modelBuilder.Entity<Food>().HasMany(f => f.FoodPortions)
+                  .WithOne(x => x.Food)
+                  .HasForeignKey(fp => fp.FoodId)
+                  .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<MealIngredient>()
-                .HasKey(MealRecipe => new { MealRecipe.MealId, MealRecipe.FoodId }); // mealId and foodId are composite primary key
+            //modelBuilder.Entity<Food>().HasMany(f => f.FoodNutrients)
+            //      .WithOne(fn => fn.)
+            //      .HasForeignKey(fn => fn.FoodId)
+            //      .OnDelete(DeleteBehavior.Cascade);
 
-            // MealRecipe - Foreign Key Relationships
-            modelBuilder.Entity<Meal>()
-                .HasMany(m => m.MealIngredients) // Meal'in navigation property'si
-                .WithOne(mi => mi.Meal) // MealIngredient'in navigation property'si
-                .HasForeignKey(mi => mi.MealId)
-                .OnDelete(DeleteBehavior.Cascade);
+            //entity.HasMany(f => f.InputFoods)
+            //      .WithOne(ifd => ifd.Food)
+            //      .HasForeignKey(ifd => ifd.FoodId)
+            //      .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<MealIngredient>()
-                .HasOne(mi => mi.Food) // MealIngredient'in Food ile olan iliskisi
-                .WithMany() // Food'un navigation property’si yoksa bu bos kalabilir.
-                .HasForeignKey(mi => mi.FoodId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //entity.HasOne(f => f.FoodCategory)
+            //      .WithMany(fc => fc.Foods)
+            //      .HasForeignKey(f => f.FoodCategoryId)
+            //      .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);
 
         }
 
-        public DbSet<Food> Foods { get; set; } = null!;
-        public DbSet<Meal> Meals { get; set; } = null!;
-        public DbSet<MealIngredient> MealRecipes { get; set; } = null!;
+        public DbSet<Food> Foods { get; set; }
+        public DbSet<FoodNutrient> FoodNutrients { get; set; }
+        public DbSet<FoodNutrientDerivation> FoodNutrientDerivations { get; set; }
+        public DbSet<FoodNutrientSource> FoodNutrientSources { get; set; }
+        public DbSet<NutrientConversionFactor> NutrientConversionFactors { get; set; }
+        public DbSet<FoodCategory> FoodCategories { get; set; }
+        public DbSet<FoodPortion> FoodPortions { get; set; }
+        public DbSet<MeasureUnit> MeasureUnits { get; set; }
+        public DbSet<InputFood> InputFoods { get; set; }
+        public DbSet<Nutrient> Nutrients { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            foreach (var entry in base.ChangeTracker.Entries<BaseEntity>()
-                .Where(q => q.State == EntityState.Added || q.State == EntityState.Modified))
-            {
-                entry.Entity.DateModified = DateTime.Now;
-                if (entry.State == EntityState.Added)
-                {
-                    entry.Entity.DateCreated = DateTime.Now;
-                }
-                entry.Entity.CreatedBy = "User";
-                entry.Entity.ModifiedBy = "User";
-            }
+            //foreach (var entry in base.ChangeTracker.Entries<BaseEntity>()
+            //    .Where(q => q.State == EntityState.Added || q.State == EntityState.Modified))
+            //{
+            //    entry.Entity.DateModified = DateTime.Now;
+            //    if (entry.State == EntityState.Added)
+            //    {
+            //        entry.Entity.DateCreated = DateTime.Now;
+            //    }
+            //    entry.Entity.CreatedBy = "User";
+            //    entry.Entity.ModifiedBy = "User";
+            //}
             return base.SaveChangesAsync(cancellationToken);
         }
     }

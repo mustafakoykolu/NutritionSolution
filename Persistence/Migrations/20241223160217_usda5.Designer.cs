@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Persistence.DatabaseContext;
@@ -11,9 +12,11 @@ using Persistence.DatabaseContext;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(PersistenceDbContext))]
-    partial class PersistenceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241223160217_usda5")]
+    partial class usda5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -426,7 +429,7 @@ namespace Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<float?>("CarbohydrateValue")
+                    b.Property<float>("CarbohydrateValue")
                         .HasColumnType("real");
 
                     b.Property<string>("CreatedBy")
@@ -438,7 +441,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime?>("DateModified")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<float?>("FatValue")
+                    b.Property<float>("FatValue")
                         .HasColumnType("real");
 
                     b.Property<int?>("FoodId")
@@ -447,14 +450,14 @@ namespace Persistence.Migrations
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("text");
 
-                    b.Property<float?>("ProteinValue")
+                    b.Property<float>("ProteinValue")
                         .HasColumnType("real");
 
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<float?>("Value")
+                    b.Property<float>("Value")
                         .HasColumnType("real");
 
                     b.HasKey("Id");

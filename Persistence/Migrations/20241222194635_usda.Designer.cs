@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Persistence.DatabaseContext;
@@ -11,9 +12,11 @@ using Persistence.DatabaseContext;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(PersistenceDbContext))]
-    partial class PersistenceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241222194635_usda")]
+    partial class usda
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,8 +57,9 @@ namespace Persistence.Migrations
                     b.Property<int>("FdcId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("FoodCategoryId")
-                        .HasColumnType("integer");
+                    b.Property<string>("FoodCategory")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("FoodClass")
                         .IsRequired()
@@ -74,8 +78,6 @@ namespace Persistence.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FoodCategoryId");
 
                     b.ToTable("Foods");
                 });
@@ -398,10 +400,6 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("NameTr")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasColumnType("text");
@@ -426,7 +424,7 @@ namespace Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<float?>("CarbohydrateValue")
+                    b.Property<float>("CarbohydrateValue")
                         .HasColumnType("real");
 
                     b.Property<string>("CreatedBy")
@@ -438,7 +436,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime?>("DateModified")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<float?>("FatValue")
+                    b.Property<float>("FatValue")
                         .HasColumnType("real");
 
                     b.Property<int?>("FoodId")
@@ -447,32 +445,18 @@ namespace Persistence.Migrations
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("text");
 
-                    b.Property<float?>("ProteinValue")
+                    b.Property<float>("ProteinValue")
                         .HasColumnType("real");
 
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<float?>("Value")
-                        .HasColumnType("real");
-
                     b.HasKey("Id");
 
                     b.HasIndex("FoodId");
 
                     b.ToTable("NutrientConversionFactors");
-                });
-
-            modelBuilder.Entity("Domain.Entity.Food", b =>
-                {
-                    b.HasOne("Domain.Entity.FoodCategory", "FoodCategory")
-                        .WithMany()
-                        .HasForeignKey("FoodCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FoodCategory");
                 });
 
             modelBuilder.Entity("Domain.Entity.FoodNutrient", b =>

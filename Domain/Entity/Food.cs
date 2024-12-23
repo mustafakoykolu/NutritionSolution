@@ -1,46 +1,24 @@
 ﻿using Domain.Common;
 
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Domain.Entity
 {
-    public class Food : BaseEntity
+    public class Food:BaseEntity
     {
-        public string Name { get; set; } = string.Empty;
-        public float KCal { get; set; }
-        public float Protein { get; set; }
-        public float Fat { get; set; }
-        public float Carbs { get; set; }
-        public float Fiber { get; set; }
-        public float Sugar { get; set; }
-        public float Salt { get; set; }
-        public float Iron { get; set; }
-        public float VitaminA { get; set; }
-        public float VitaminC { get; set; }
-        public float VitaminD { get; set; }
-        public float VitaminE { get; set; }
-        public float VitaminK { get; set; }
-        public float VitaminB1 { get; set; }
-        public float VitaminB2 { get; set; }
-        public float VitaminB3 { get; set; }
-        public float VitaminB5 { get; set; }
-        public float VitaminB6 { get; set; }
-        public float VitaminB7 { get; set; }
-        public float VitaminB9 { get; set; }
-        public float VitaminB12 { get; set; }
-        public float Calcium { get; set; }
-        public float Phosphorus { get; set; }
-        public float Magnesium { get; set; }
-        public float Zinc { get; set; }
-        public float Copper { get; set; }
-        public float Manganese { get; set; }
-        public float Selenium { get; set; }
-        public float Potassium { get; set; }
-        public float Sodium { get; set; }
-        public float Cholesterol { get; set; }
-        public float Caffeine { get; set; }
-        public string ImagePath { get; set; } = string.Empty;
-        public string Benefits { get; set; } = string.Empty;
-        public string History { get; set; } = string.Empty;
-        public float Portion { get; set; }
-        public string PortionUnit {  get; set; } = string.Empty ;
+        public string FoodClass { get; set; }
+        public string Description { get; set; }
+        public string DescriptionTr { get; set; }
+        public DateTime PublicationDate { get; set; }
+        public bool IsHistoricalReference { get; set; }
+        public int NdbNumber { get; set; }
+        public string DataType { get; set; }
+        public int FdcId { get; set; }
+        public ICollection<FoodPortion> FoodPortions { get; set; }
+        public ICollection<FoodNutrient> FoodNutrients { get; set; }
+        //public ICollection<NutrientConversionFactor> NutrientConversionFactors { get; set; }
+        public ICollection<InputFood> InputFoods { get; set; }
+        public FoodCategory FoodCategory { get; set; }
+
     }
 }

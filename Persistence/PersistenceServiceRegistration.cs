@@ -14,8 +14,9 @@ namespace Persistence
        IConfiguration configuration)
         {
             services.AddDbContext<PersistenceDbContext>(options => {
-                options.UseNpgsql(configuration.GetConnectionString("NutritionDbConnectionString"));
-            });
+                options.UseNpgsql(configuration.GetConnectionString("NutritionDbConnectionString"), npgsqlOptions => npgsqlOptions.CommandTimeout(720)).EnableSensitiveDataLogging().LogTo(Console.WriteLine);
+
+        });
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserRepository, UserTypeRepository>();
             services.AddScoped<IUnitOfWork, RepositoryTransactionUnitOfWork>();

@@ -17,15 +17,32 @@ namespace Persistence.Repositories
         {
 
         }
-
+        public async Task<List<Food>> GetAllAsync()
+        {
+            var objectList = await _dbSet.Include(f => f.FoodNutrients)
+        .ThenInclude(fn => fn.Nutrient).ToListAsync();
+            return objectList;
+        }
+        public async Task<List<Food>> GetPagedAsync(int pageNumber, int pageSize)
+        {
+            var objectList = await _dbSet
+                .Include(f=> f.FoodPortions)
+                
+                .Skip((pageNumber - 1) * pageSize)
+    .Take(pageSize)
+    .ToListAsync();
+            return objectList;
+        }
         public async Task<List<Food>> SearchByName(string foodName, int pageNumber, int pageSize)
         {
-            var objectList = await _dbSet.Where(x=> x.Name.Contains(foodName)).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            var objectList = await _dbSet.Include(f => f.FoodNutrients)
+        .ThenInclude(fn => fn.Nutrient).Where(x => x.Description.Contains(foodName)).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
             return objectList;
         }
         public async Task<int> SearchByNameCount(string foodName, int pageNumber, int pageSize)
         {
-            var count = await _dbSet.Where(x => x.Name.Contains(foodName)).CountAsync();
+            var count = await _dbSet.Include(f => f.FoodNutrients)
+        .ThenInclude(fn => fn.Nutrient).Where(x => x.Description.Contains(foodName)).CountAsync();
             return count;
         }
 

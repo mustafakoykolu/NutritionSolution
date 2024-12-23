@@ -5,7 +5,7 @@
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class _20241219_FoodUpdate_3 : Migration
+    public partial class usda4 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

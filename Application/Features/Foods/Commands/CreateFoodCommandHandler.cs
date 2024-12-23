@@ -47,7 +47,7 @@ namespace Application.Features.Foods.Commands
                 await request.Image.CopyToAsync(stream);
             }
 
-            var food = _mapper.Map<Food>(request);
+            var food = _mapper.Map<Domain.Entity.Food>(request);
             await _foodRepository.CreateAsync(food);
             return food.Id;
         }
