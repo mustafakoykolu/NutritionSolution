@@ -11,8 +11,8 @@ namespace Domain.Entity
     {
         public int MealId { get; set; }
         public int FoodId { get; set; }
-        public float Quantity { get; set; }
-        public string Unit { get; set; } = string.Empty;
+        public float Portion { get; set; }
+        public string PortionUnit { get; set; } = string.Empty;
 
         public Food Food { get; set; } // Navigation Property
         public Meal Meal { get; set; } // Navigation Property

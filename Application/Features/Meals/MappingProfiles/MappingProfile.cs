@@ -11,9 +11,12 @@ namespace Application.Features.Meals.MappingProfiles
         public MappingProfile()
         {
             CreateMap<Meal, MealDto>();
+
+            CreateMap<MealIngredientDto, MealIngredient>();
+
             CreateMap<MealIngredient, MealIngredientDto>()
                .ForMember(dest => dest.Food, opt => opt.MapFrom(src => src.Food));
-            CreateMap<MealIngredientDto, MealIngredient>();
+
             CreateMap<CreateMealCommand, Meal>()
                 .ForMember(dest => dest.MealIngredients, opt => opt.MapFrom(src => src.MealIngredients));
         }
