@@ -26,11 +26,13 @@ namespace Persistence.Repositories
         public async Task<List<Food>> GetPagedAsync(int pageNumber, int pageSize)
         {
             var objectList = await _dbSet
-                .Include(f=> f.FoodPortions)
-                
+                .Include(f=> f.FoodNutrients)
+                    .ThenInclude(f=> f.Nutrient)
+                .Include(f => f.FoodPortions)
+                .Include(f => f.InputFoods)
                 .Skip((pageNumber - 1) * pageSize)
-    .Take(pageSize)
-    .ToListAsync();
+                .Take(pageSize)
+                .ToListAsync();
             return objectList;
         }
         public async Task<List<Food>> SearchByName(string foodName, int pageNumber, int pageSize)

@@ -15,8 +15,5 @@ namespace Domain.Entity
         public int SequenceNumber { get; set; }
         public float Amount { get; set; }
         public int MinYearAcquired { get; set; }
-        public Food Food { get; set; }
-        public int FoodId { get; set; }
-
     }
 }

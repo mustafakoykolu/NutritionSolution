@@ -14,14 +14,14 @@ namespace Persistence.DatabaseContext
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersistenceDbContext).Assembly);
 
-            // Relationships
-            modelBuilder.Entity<Food>().HasMany(f => f.FoodPortions)
-                  .WithOne(x => x.Food)
-                  .HasForeignKey(fp => fp.FoodId)
-                  .OnDelete(DeleteBehavior.Cascade);
+            //// Relationships
+            //modelBuilder.Entity<Food>().HasMany(f => f.FoodPortions)
+            //      .WithOne(fp => fp.food)
+            //      .HasForeignKey(fp => fp.FoodId)
+            //      .OnDelete(DeleteBehavior.Cascade);
 
-            //modelBuilder.Entity<Food>().HasMany(f => f.FoodNutrients)
-            //      .WithOne(fn => fn.)
+            //modelBuilder.Entity(Food).HasMany(f => f.FoodNutrients)
+            //      .WithOne(fn => fn.Food)
             //      .HasForeignKey(fn => fn.FoodId)
             //      .OnDelete(DeleteBehavior.Cascade);
 

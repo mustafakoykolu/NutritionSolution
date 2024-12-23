@@ -9,7 +9,9 @@ namespace Application.Features.Foods.Dtos
         public string FoodClass { get; set; }
         public string Description { get; set; }
         public string DescriptionTr { get; set; }
-
+        public ICollection<FoodPortion> FoodPortions { get; set; }
         public ICollection<FoodNutrient> FoodNutrients { get; set; }
+        public ICollection<InputFood> InputFoods { get; set; }
+        public FoodCategory FoodCategory { get; set; }
     }
 }
