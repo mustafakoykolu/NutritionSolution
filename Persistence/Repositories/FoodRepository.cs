@@ -19,8 +19,17 @@ namespace Persistence.Repositories
         }
         public async Task<List<Food>> GetAllAsync()
         {
-            var objectList = await _dbSet.Include(f => f.FoodNutrients)
-        .ThenInclude(fn => fn.Nutrient).ToListAsync();
+            var objectList = await _dbSet
+                .Include(f => f.FoodNutrients)
+                    .ThenInclude(f => f.Nutrient)
+                .Include(f => f.FoodNutrients)
+                .ThenInclude(fn => fn.Derivation)
+                .Include(f => f.FoodPortions)
+                    .ThenInclude(f => f.MeasureUnit)
+                .Include(f => f.InputFoods)
+                .Include(f => f.NutrientConversionFactors)
+                .Include(f => f.FoodCategory)
+                .ToListAsync();
             return objectList;
         }
         public async Task<List<Food>> GetPagedAsync(int pageNumber, int pageSize)
@@ -28,8 +37,13 @@ namespace Persistence.Repositories
             var objectList = await _dbSet
                 .Include(f=> f.FoodNutrients)
                     .ThenInclude(f=> f.Nutrient)
+                .Include(f => f.FoodNutrients)
+                .ThenInclude(fn => fn.Derivation)
                 .Include(f => f.FoodPortions)
-                .Include(f => f.InputFoods)
+                    .ThenInclude(f=> f.MeasureUnit)
+                .Include(f=> f.InputFoods)
+                .Include(f=> f.NutrientConversionFactors)
+                .Include(f=> f.FoodCategory)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
@@ -37,14 +51,36 @@ namespace Persistence.Repositories
         }
         public async Task<List<Food>> SearchByName(string foodName, int pageNumber, int pageSize)
         {
-            var objectList = await _dbSet.Include(f => f.FoodNutrients)
-        .ThenInclude(fn => fn.Nutrient).Where(x => x.Description.Contains(foodName)).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            var objectList = await _dbSet
+                .Include(f => f.FoodNutrients)
+                    .ThenInclude(f => f.Nutrient)
+                .Include(f => f.FoodNutrients)
+                .ThenInclude(fn => fn.Derivation)
+                .Include(f => f.FoodPortions)
+                    .ThenInclude(f => f.MeasureUnit)
+                .Include(f => f.InputFoods)
+                .Include(f => f.NutrientConversionFactors)
+                .Include(f => f.FoodCategory).Where(f => f.DescriptionTr.ToLower().Contains(foodName.ToLower())).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
             return objectList;
         }
         public async Task<int> SearchByNameCount(string foodName, int pageNumber, int pageSize)
         {
-            var count = await _dbSet.Include(f => f.FoodNutrients)
-        .ThenInclude(fn => fn.Nutrient).Where(x => x.Description.Contains(foodName)).CountAsync();
+            var count = await _dbSet.Where(f => f.DescriptionTr.ToLower().Contains(foodName.ToLower())).CountAsync();
+            return count;
+        }
+
+        public async Task<int>  GetCountAsync()
+        {
+            var count = await _dbSet
+               .Include(f => f.FoodNutrients)
+                   .ThenInclude(f => f.Nutrient)
+               .Include(f => f.FoodNutrients)
+               .ThenInclude(fn => fn.Derivation)
+               .Include(f => f.FoodPortions)
+                   .ThenInclude(f => f.MeasureUnit)
+               .Include(f => f.InputFoods)
+               .Include(f => f.NutrientConversionFactors)
+               .Include(f => f.FoodCategory).CountAsync();
             return count;
         }
 

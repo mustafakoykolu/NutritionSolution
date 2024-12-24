@@ -18,8 +18,8 @@ namespace Domain.Entity
         public ICollection<FoodNutrient> FoodNutrients { get; set; }
         public ICollection<InputFood> InputFoods { get; set; }
         public FoodCategory FoodCategory { get; set; }
-        //public ICollection<NutrientConversionFactor> NutrientConversionFactors { get; set; }
-
+        public ICollection<NutrientConversionFactor> NutrientConversionFactors { get; set; }
+        public string ImageName { get; set; }
 
     }
 }

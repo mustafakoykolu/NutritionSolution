@@ -10,7 +10,7 @@ namespace Domain.Entity
     public class InputFood:BaseEntity
     {
         public string FoodDescription { get; set; }
-        public string FoodDescriptionTr { get; set; }
-        public Food Food { get; set; }
+        public string FoodDescriptionTr { get; set; } //asd
+        //public Food Food { get; set; }
     }
 }
