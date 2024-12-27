@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Persistence.DatabaseContext;
@@ -11,9 +12,11 @@ using Persistence.DatabaseContext;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(PersistenceDbContext))]
-    partial class PersistenceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241227211803_asdf2")]
+    partial class asdf2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,10 +54,15 @@ namespace Persistence.Migrations
                     b.Property<float>("Starch")
                         .HasColumnType("real");
 
+                    b.Property<int>("SugarId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FoodId")
                         .IsUnique();
+
+                    b.HasIndex("SugarId");
 
                     b.ToTable("Carbohydrates");
                 });
@@ -244,9 +252,6 @@ namespace Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CarbohydrateId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
@@ -278,9 +283,6 @@ namespace Persistence.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CarbohydrateId")
-                        .IsUnique();
 
                     b.ToTable("Sugars");
                 });
@@ -371,6 +373,14 @@ namespace Persistence.Migrations
                         .HasForeignKey("Domain.Entity.Carbohydrate", "FoodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Domain.Entity.Sugar", "Sugar")
+                        .WithMany()
+                        .HasForeignKey("SugarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sugar");
                 });
 
             modelBuilder.Entity("Domain.Entity.Lipid", b =>
@@ -391,27 +401,12 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Entity.Sugar", b =>
-                {
-                    b.HasOne("Domain.Entity.Carbohydrate", null)
-                        .WithOne("Sugar")
-                        .HasForeignKey("Domain.Entity.Sugar", "CarbohydrateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Domain.Entity.Vitamin", b =>
                 {
                     b.HasOne("Domain.Entity.Food", null)
                         .WithOne("Vitamin")
                         .HasForeignKey("Domain.Entity.Vitamin", "FoodId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entity.Carbohydrate", b =>
-                {
-                    b.Navigation("Sugar")
                         .IsRequired();
                 });
 
