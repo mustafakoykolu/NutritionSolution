@@ -26,6 +26,11 @@ namespace Persistence.Repositories
         public async Task<List<Food>> GetPagedAsync(int pageNumber, int pageSize)
         {
             var objectList = await _dbSet
+                .Include(f=> f.Vitamin)
+                .Include(f => f.Mineral)
+                .Include(f=> f.Carbohydrate)
+                    .ThenInclude(f=> f.Sugar)
+                .Include(f=>f.Fat)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
@@ -33,7 +38,11 @@ namespace Persistence.Repositories
         }
         public async Task<List<Food>> SearchByName(string foodName, int pageNumber, int pageSize)
         {
-            var objectList = await _dbSet.Where(f => f.NameTr.ToLower().Contains(foodName.ToLower())).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            var objectList = await _dbSet.Include(f => f.Vitamin)
+                .Include(f => f.Mineral)
+                .Include(f => f.Carbohydrate)
+                    .ThenInclude(f => f.Sugar)
+                .Include(f => f.Fat).Where(f => f.NameTr.ToLower().Contains(foodName.ToLower())).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
             return objectList;
         }
         public async Task<int> SearchByNameCount(string foodName, int pageNumber, int pageSize)
