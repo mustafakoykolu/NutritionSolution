@@ -12,8 +12,6 @@
 
   <ItemGroup>
     <Folder Include="Features\Meals\Commands\" />
-    <Folder Include="Features\Meals\Dtos\" />
-    <Folder Include="Features\Meals\Queries\" />
     <Folder Include="Features\UserType\Commands\DeleteUserType\" />
     <Folder Include="Features\UserType\Commands\UpdateUserType\" />
     <Folder Include="Features\UserType\Queries\" />
