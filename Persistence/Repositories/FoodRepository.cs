@@ -56,6 +56,15 @@ namespace Persistence.Repositories
             var count = await _dbSet.CountAsync();
             return count;
         }
+        public async Task<Food> GetByIdAsync(int id)
+        {
+            var food = await _dbSet.Include(f => f.Vitamin)
+                .Include(f => f.Mineral)
+                .Include(f => f.Carbohydrate)
+                    .ThenInclude(f => f.Sugar)
+                .Include(f => f.Fat).Where(f=> f.Id == id).FirstAsync();
+            return food;
+        }
 
     }
 }

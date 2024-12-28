@@ -1,10 +1,11 @@
-﻿using Domain.Entity;
+﻿using Domain.Common;
+using Domain.Entity;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Application.Features.Foods.Dtos
 {
 
-    public class FoodsDto
+    public class FoodsDto : BaseEntity
     {
         public string Name { get; set; }
         public string NameTr { get; set; }

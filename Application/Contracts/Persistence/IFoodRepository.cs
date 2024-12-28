@@ -13,6 +13,7 @@ namespace Application.Contracts.Persistence
         //custom methods
         Task<List<Food>> SearchByName(string userName, int pageNumber, int pageSize);
         Task<int> SearchByNameCount(string userName, int pageNumber, int pageSize);
+        Task<Food> GetByIdAsync(int id);
 
     }
 }
