@@ -50,6 +50,18 @@ namespace Persistence.DatabaseContext
                 .HasForeignKey<Lipid>(f => f.FoodId)
                 .OnDelete(DeleteBehavior.Cascade);  // Lipid silindiğinde Food etkilenmesin
 
+            modelBuilder.Entity<Meal>()
+                .HasMany(m => m.MealFoods) // Meal -> MealFoods
+                .WithOne(mf => mf.Meal)
+                .HasForeignKey(mf => mf.MealId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MealFood>()
+                .HasOne(mf => mf.Food) // MealFood -> Food
+                .WithMany()
+                .HasForeignKey(mf => mf.FoodId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -59,6 +71,10 @@ namespace Persistence.DatabaseContext
         public DbSet<Mineral> Minerals { get; set; }
         public DbSet<Sugar> Sugars { get; set; }
         public DbSet<Vitamin> Vitamins { get; set; }
+
+        public DbSet<Meal> Meals { get; set; }
+        public DbSet<MealFood> MealFoods { get; set; }
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             foreach (var entry in base.ChangeTracker.Entries<BaseEntity>()

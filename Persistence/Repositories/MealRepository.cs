@@ -11,11 +11,7 @@ namespace Persistence.Repositories
 
         public async Task<List<Meal>> GetMealsWithIngredientsAsync()
         {
-            var meal= await _dbSet
-                .Include(m => m.MealIngredients)
-                .ThenInclude(mi => mi.Food)
-                .ToListAsync();
-            return meal;
+            return null;
         }
     }
 }
