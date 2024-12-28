@@ -1,7 +1,9 @@
-﻿using Application.Features.Meals.Commands;
+﻿
+using Application.Features.Foods.Dtos;
 using Application.Features.Meals.Dtos;
 using AutoMapper;
 using Domain.Entity;
+
 
 
 namespace Application.Features.Meals.MappingProfiles
@@ -10,12 +12,17 @@ namespace Application.Features.Meals.MappingProfiles
     {
         public MappingProfile()
         {
-            CreateMap<Meal, MealDto>();
-            CreateMap<MealIngredient, MealIngredientDto>()
-               .ForMember(dest => dest.Food, opt => opt.MapFrom(src => src.Food));
-            CreateMap<MealIngredientDto, MealIngredient>();
-            CreateMap<CreateMealCommand, Meal>()
-                .ForMember(dest => dest.MealIngredients, opt => opt.MapFrom(src => src.MealIngredients));
+            // Meal -> MealDto
+            CreateMap<Meal, MealDto>()
+                .ForMember(dest => dest.TotalNutrients, opt => opt.Ignore()); // Toplam besin değerlerini hesaplayacağız
+
+            // MealFood -> MealFoodDto
+            CreateMap<MealFood, MealFoodDto>()
+                .ForMember(dest => dest.Food, opt => opt.MapFrom(src => src.Food)) // Food -> FoodDto
+                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity));
+
+            // Food -> FoodsDto
+            CreateMap<Food, FoodsDto>();
         }
     }
 }
