@@ -10,5 +10,7 @@ namespace Application.Contracts.Persistence
     public interface IMealRepository : IGenericRepository<Meal>
     {
         Task<List<Meal>> GetMealsWithIngredientsAsync();
+        Task<List<Meal>> GetMealsPagedAsync(int pageNumber,int pageSize);
+
     }
 }

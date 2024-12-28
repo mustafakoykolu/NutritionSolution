@@ -1,4 +1,5 @@
-﻿using Application.Features.Foods.Commands;
+﻿using Application.Common.Dtos;
+using Application.Features.Foods.Commands;
 using Application.Features.Foods.Dtos;
 using Application.Features.Foods.Queries;
 using Application.Features.UserType.Commands.CreateUserType;
@@ -21,7 +22,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("GetFoods")]
-        public async Task<ActionResult<FoodsDtoPaging>> GetFoods([FromQuery]GetFoodsQuery getFoodsQuery)
+        public async Task<ActionResult<DataDtoPaging>> GetFoods([FromQuery]GetFoodsQuery getFoodsQuery)
         {
             var result = await _mediator.Send(getFoodsQuery);
             return Ok(result);
@@ -40,7 +41,7 @@ namespace Api.Controllers
             return Ok(result);
         }
         [HttpGet("SearchFood")]
-        public async Task<ActionResult<FoodsDto>> SearchFood([FromQuery] SearchFoodQuery searchFoodQuery)
+        public async Task<ActionResult<DataDtoPaging>> SearchFood([FromQuery] SearchFoodQuery searchFoodQuery)
         {
             var result = await _mediator.Send(searchFoodQuery);
             return Ok(result);
