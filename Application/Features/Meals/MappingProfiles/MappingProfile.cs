@@ -23,6 +23,15 @@ namespace Application.Features.Meals.MappingProfiles
 
             // Food -> FoodsDto
             CreateMap<Food, FoodsDto>();
+
+            // CreateMealDto -> Meal
+            CreateMap<CreateMealDto, Meal>()
+                .ForMember(dest => dest.ImagePath, opt => opt.MapFrom(src => src.ImageName))
+                .ForMember(dest => dest.MealFoods, opt => opt.MapFrom(src => src.Ingredients)); // Ingredients -> MealFoods
+
+            // CreateMealFoodDto -> MealFood
+            CreateMap<CreateMealFoodDto, MealFood>();
+
         }
     }
 }

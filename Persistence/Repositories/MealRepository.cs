@@ -28,5 +28,12 @@ namespace Persistence.Repositories
                 .ToListAsync();
             return mealList;
         }
+
+        public async Task<int> AddAsync(Meal meal)
+        {
+            await _context.Meals.AddAsync(meal);
+            await _context.SaveChangesAsync();
+            return meal.Id;
+        }
     }
 }

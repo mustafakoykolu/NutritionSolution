@@ -1,4 +1,5 @@
-﻿using Application.Features.Meals.Dtos;
+﻿using Application.Features.Meals.Commands;
+using Application.Features.Meals.Dtos;
 using Application.Features.Meals.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -25,11 +26,12 @@ namespace Api.Controllers
             return Ok(result);
         }
 
-        //[HttpPost("CreateMeal")]
-        //public async Task<ActionResult<MealDto>> CreateMeal([FromForm] CreateMealCommand createMealRq)
-        //{
-        //    var result = await _mediator.Send(createMealRq);
-        //    return Ok(result);
-        //}
+        [HttpPost("CreateMeal")]
+        public async Task<ActionResult<int>> CreateMeal([FromBody] CreateMealDto createMealRq)
+        {
+            var command = new CreateMealCommand(createMealRq);
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
     }
 }
