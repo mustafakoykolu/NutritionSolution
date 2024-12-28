@@ -11,5 +11,6 @@ namespace Application.Contracts.Persistence
     {
         Task<List<Meal>> GetMealsWithIngredientsAsync();
         Task<int> AddAsync(Meal meal);
+        Task<List<Meal>> GetMealsPagedAsync(int pageNumber,int pageSize);
     }
 }

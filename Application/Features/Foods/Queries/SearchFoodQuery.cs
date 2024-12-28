@@ -1,4 +1,5 @@
-﻿using Application.Features.Foods.Dtos;
+﻿using Application.Common.Dtos;
+using Application.Features.Foods.Dtos;
 using Domain.Interfaces;
 using MediatR;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Foods.Queries
 {
-    public class SearchFoodQuery : IRequest<FoodsDtoPaging>, IPaginationRequest
+    public class SearchFoodQuery : IRequest<DataDtoPaging>, IPaginationRequest
     {
         public string FoodName { get; set; }
         public int PageNumber { get; set; }
