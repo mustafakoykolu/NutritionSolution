@@ -29,6 +29,27 @@ namespace Persistence.Repositories
             return mealList;
         }
 
+        public async Task<Meal> GetMealsWithIngredientsByIdAsync(int id)
+        {
+            var meal = await _context.Meals
+                .Include(m => m.MealFoods) // Meal -> MealFoods ilişkisi
+                    .ThenInclude(mf => mf.Food) // MealFoods -> Food ilişkisi
+                        .ThenInclude(f => f.Vitamin) // Food -> Vitamin
+                .Include(m => m.MealFoods)
+                    .ThenInclude(mf => mf.Food)
+                        .ThenInclude(f => f.Mineral) // Food -> Mineral
+                .Include(m => m.MealFoods)
+                    .ThenInclude(mf => mf.Food)
+                        .ThenInclude(f => f.Carbohydrate) // Food -> Carbohydrate
+                            .ThenInclude(c => c.Sugar) // Carbohydrate -> Sugar
+                .Include(m => m.MealFoods)
+                    .ThenInclude(mf => mf.Food)
+                        .ThenInclude(f => f.Fat) // Food -> Fat
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            return meal;
+        }
+
         public async Task<int> AddAsync(Meal meal)
         {
             await _context.Meals.AddAsync(meal);

@@ -19,6 +19,15 @@ namespace Api.Controllers
             this._mediator = mediator;
         }
 
+        [HttpGet("GetMealById")]
+        public async Task<ActionResult<MealDto>> GetMealById(int id)
+        {
+            var query = new GetMealByIdQuery(id);
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+
         [HttpGet("GetMeals")]
         public async Task<ActionResult<List<MealDto>>> GetMeals([FromQuery] GetMealsQuery getMealsQuery  )
         {
