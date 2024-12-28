@@ -34,7 +34,7 @@ namespace Application.Features.Meals.Queries
                     Fat = (float)meal.MealFoods.Sum(mf => mf.Food.Fat.Saturated.GetValueOrDefault() * mf.Quantity / 100),
                     Carbohydrate = (float)meal.MealFoods.Sum(mf => mf.Food.Carbohydrate.Fiber.GetValueOrDefault() * mf.Quantity / 100)
                 },
-                Ingredients = _mapper.Map<List<FoodsDto>>(meal.MealFoods)
+                Ingredients = _mapper.Map<List<MealFoodDto>>(meal.MealFoods)
             }).ToList();
 
             return mealDtos;

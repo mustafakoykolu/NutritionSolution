@@ -1,5 +1,4 @@
-﻿using Application.Features.Foods.Dtos;
-
+﻿
 namespace Application.Features.Meals.Dtos
 {
     public class MealDto
@@ -10,6 +9,6 @@ namespace Application.Features.Meals.Dtos
         public string ImagePath { get; set; } = string.Empty;
         public string History { get; set; } = string.Empty;
         public NutrientDto TotalNutrients { get; set; }
-        public List<FoodsDto> Ingredients { get; set; } // GetFoods'ta kullanılan DTO
+        public List<MealFoodDto> Ingredients { get; set; } // GetFoods'ta kullanılan DTO
     }
 }

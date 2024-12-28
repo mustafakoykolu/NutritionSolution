@@ -16,12 +16,13 @@ namespace Application.Features.Meals.MappingProfiles
             CreateMap<Meal, MealDto>()
                 .ForMember(dest => dest.TotalNutrients, opt => opt.Ignore()); // Toplam besin değerlerini hesaplayacağız
 
-            // MealFoods -> FoodDto (GetFoods ile aynı yapıya sahip)
-            CreateMap<MealFood, FoodsDto>()
-                .ForMember(dest => dest.KCal, opt => opt.MapFrom(src => src.Food.KCal))
-                .ForMember(dest => dest.Protein, opt => opt.MapFrom(src => src.Food.Protein))
-                .ForMember(dest => dest.Fat, opt => opt.MapFrom(src => src.Food.Fat))
-                .ForMember(dest => dest.Carbohydrate, opt => opt.MapFrom(src => src.Food.Carbohydrate));
+            // MealFood -> MealFoodDto
+            CreateMap<MealFood, MealFoodDto>()
+                .ForMember(dest => dest.Food, opt => opt.MapFrom(src => src.Food)) // Food -> FoodDto
+                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity));
+
+            // Food -> FoodsDto
+            CreateMap<Food, FoodsDto>();
         }
     }
 }
