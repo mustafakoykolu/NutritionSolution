@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using Application.Features.Foods.Commands;
+using Domain;
 using Domain.Entity;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,5 @@ namespace Application.Contracts.Persistence
         Task<List<Food>> SearchByName(string userName, int pageNumber, int pageSize);
         Task<int> SearchByNameCount(string userName, int pageNumber, int pageSize);
         Task<Food> GetByIdAsync(int id);
-
     }
 }

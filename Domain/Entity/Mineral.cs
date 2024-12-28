@@ -4,6 +4,7 @@ namespace Domain.Entity
 {
     public class Mineral:BaseEntity
     {
+        public int FoodId { get; set; }
         public float? Calcium { get; set; }
         public float? Iron { get; set; }
         public float? Magnesium { get; set; }
@@ -14,7 +15,6 @@ namespace Domain.Entity
         public float? Copper { get; set; }
         public float? Manganese { get; set; }
         public float? Selenium { get; set; }
-        public int FoodId { get; set; }
     }
 
 }

@@ -6,7 +6,7 @@ namespace Domain.Entity
 {
     public class Food:BaseEntity
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public string NameTr { get; set; }
         public float? KCal { get; set; }
         public float? Protein { get; set; }
