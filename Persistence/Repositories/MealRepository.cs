@@ -28,6 +28,12 @@ namespace Persistence.Repositories
                 .ToListAsync();
             return mealList;
         }
+
+        public async Task<int> AddAsync(Meal meal)
+        {
+            await _context.Meals.AddAsync(meal);
+            await _context.SaveChangesAsync();
+            return meal.Id;
         public async Task<List<Meal>> GetMealsPagedAsync(int pageNumber, int pageSize)
         {
             var mealList = await _context.Meals
@@ -47,7 +53,6 @@ namespace Persistence.Repositories
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
-            return mealList;
         }
     }
 }
