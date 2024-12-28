@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Application.Features.Foods.Dtos
 {
-
-    public class FoodsDto : BaseEntity
+    public class FoodsDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string NameTr { get; set; }
         public float? KCal { get; set; }

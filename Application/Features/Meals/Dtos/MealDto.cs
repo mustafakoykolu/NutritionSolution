@@ -3,6 +3,7 @@ namespace Application.Features.Meals.Dtos
 {
     public class MealDto
     {
+        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } // Yemek açıklaması
         public string Recipe { get; set; } = string.Empty;

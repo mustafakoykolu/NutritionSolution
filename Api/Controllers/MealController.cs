@@ -20,9 +20,9 @@ namespace Api.Controllers
         }
 
         [HttpGet("GetMeals")]
-        public async Task<ActionResult<List<MealDto>>> GetMeals()
+        public async Task<ActionResult<List<MealDto>>> GetMeals([FromQuery] GetMealsQuery getMealsQuery  )
         {
-            var result = await _mediator.Send(new GetMealsQuery());
+            var result = await _mediator.Send(getMealsQuery);
             return Ok(result);
         }
 

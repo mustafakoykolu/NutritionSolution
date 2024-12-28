@@ -11,6 +11,7 @@ namespace Application.Features.Foods.MappingProfiles
         public MappingProfile()
         {
             CreateMap<Domain.Entity.Food, FoodsDto>();
+            
             CreateMap<CreateFoodCommand, Food>()
             // Lipid Mapping
             .ForMember(dest => dest.Fat, opt => opt.MapFrom(src => new Lipid
