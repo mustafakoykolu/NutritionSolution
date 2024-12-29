@@ -23,7 +23,7 @@ namespace Application.Features.Meals.MappingProfiles
             CreateMap<MealFood, MealFoodDto>()
                 .ForMember(dest => dest.Food, opt => opt.MapFrom(src => src.Food)) // Food -> FoodDto
                 .ForMember(dest => dest.Portion, opt => opt.MapFrom(src => src.Portion))
-                .ForMember(dest => dest.Portion, opt => opt.MapFrom(src => src.PortionUnit));
+                .ForMember(dest => dest.PortionUnit, opt => opt.MapFrom(src => src.PortionUnit));
 
             // Food -> FoodsDto
             CreateMap<Food, FoodsDto>();

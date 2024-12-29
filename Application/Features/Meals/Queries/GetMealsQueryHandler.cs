@@ -23,7 +23,6 @@ namespace Application.Features.Meals.Queries
         {
             var totalCount = await _mealRepository.GetCountAsync();
             var meals = await _mealRepository.GetMealsPagedAsync(request.PageNumber,request.PageSize);
-
             var mealList = _mapper.Map<List<MealDto>>(meals);
             var result = new DataDtoPaging() { Data = mealList, TotalCount = totalCount, DataCount = mealList.Count, PageNumber = request.PageNumber, PageSize = request.PageSize }; 
             return result;
