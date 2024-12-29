@@ -95,7 +95,6 @@ namespace Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("NameTr")
@@ -188,10 +187,6 @@ namespace Persistence.Migrations
                     b.Property<DateTime?>("DateModified")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("History")
                         .IsRequired()
                         .HasColumnType("text");
@@ -242,8 +237,12 @@ namespace Persistence.Migrations
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("text");
 
-                    b.Property<double>("Quantity")
-                        .HasColumnType("double precision");
+                    b.Property<float>("Portion")
+                        .HasColumnType("real");
+
+                    b.Property<string>("PortionUnit")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

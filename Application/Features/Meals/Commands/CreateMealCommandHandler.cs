@@ -26,22 +26,22 @@ namespace Application.Features.Meals.Commands
             }
 
             // Benzersiz dosya adı oluşturma
-            var fileExtension = Path.GetExtension(request.Meal.Image.FileName);
+            var fileExtension = Path.GetExtension(request.Image.FileName);
             var imageGuid = Guid.NewGuid();
-            request.Meal.ImageName = $"{imageGuid}{fileExtension}";
-            var uploadPath = Path.Combine(uploadFolder, request.Meal.ImageName);
+            request.ImageName = $"{imageGuid}{fileExtension}";
+            var uploadPath = Path.Combine(uploadFolder, request.ImageName);
 
             // Resmi kaydetme
             using (var stream = new FileStream(uploadPath, FileMode.Create))
             {
-                await request.Meal.Image.CopyToAsync(stream);
+                await request.Image.CopyToAsync(stream);
             }
 
             // 2. Dto -> Entity Dönüşümü
-            var meal = _mapper.Map<Domain.Entity.Meal>(request.Meal);
+            var meal = _mapper.Map<Domain.Entity.Meal>(request);
 
             // 3. Veritabanına Kaydetme
-            await _mealRepository.AddAsync(meal);
+            await _mealRepository.CreateAsync(meal);
 
             // 4. Yeni Yemeğin ID'sini Döndürme
             return meal.Id;

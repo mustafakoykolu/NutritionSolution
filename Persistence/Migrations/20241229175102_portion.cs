@@ -7,11 +7,13 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class MealMigration : Migration
+    public partial class portion : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+          
+
             migrationBuilder.CreateTable(
                 name: "Meals",
                 columns: table => new
@@ -19,7 +21,6 @@ namespace Persistence.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
                     Recipe = table.Column<string>(type: "text", nullable: false),
                     ImagePath = table.Column<string>(type: "text", nullable: false),
                     History = table.Column<string>(type: "text", nullable: false),
@@ -33,6 +34,8 @@ namespace Persistence.Migrations
                     table.PrimaryKey("PK_Meals", x => x.Id);
                 });
 
+            
+
             migrationBuilder.CreateTable(
                 name: "MealFoods",
                 columns: table => new
@@ -40,8 +43,9 @@ namespace Persistence.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     MealId = table.Column<int>(type: "integer", nullable: false),
+                    Portion = table.Column<float>(type: "real", nullable: false),
+                    PortionUnit = table.Column<string>(type: "text", nullable: false),
                     FoodId = table.Column<int>(type: "integer", nullable: false),
-                    Quantity = table.Column<double>(type: "double precision", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     DateModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
@@ -64,6 +68,9 @@ namespace Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+
+            
+
             migrationBuilder.CreateIndex(
                 name: "IX_MealFoods_FoodId",
                 table: "MealFoods",
@@ -73,16 +80,35 @@ namespace Persistence.Migrations
                 name: "IX_MealFoods_MealId",
                 table: "MealFoods",
                 column: "MealId");
+
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Lipids");
+
+            migrationBuilder.DropTable(
                 name: "MealFoods");
 
             migrationBuilder.DropTable(
+                name: "Minerals");
+
+            migrationBuilder.DropTable(
+                name: "Sugars");
+
+            migrationBuilder.DropTable(
+                name: "Vitamins");
+
+            migrationBuilder.DropTable(
                 name: "Meals");
+
+            migrationBuilder.DropTable(
+                name: "Carbohydrates");
+
+            migrationBuilder.DropTable(
+                name: "Foods");
         }
     }
 }

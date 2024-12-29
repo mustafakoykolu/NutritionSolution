@@ -10,8 +10,8 @@ namespace Domain.Entity
     public class MealFood:BaseEntity
     {
         public int MealId { get; set; } // Meal tablosu ile ilişki
-        public double Quantity { get; set; } // Kullanılan yiyecek miktarı (gram cinsinden)
-
+        public float Portion { get; set; } // Kullanılan yiyecek miktarı (gram cinsinden)
+        public string PortionUnit { get; set; } // Kullanılan yiyecek miktarı (gram cinsinden)
         public int FoodId { get; set; } // Food tablosu ile ilişki
         public Meal Meal { get; set; }
         public Food Food { get; set; }

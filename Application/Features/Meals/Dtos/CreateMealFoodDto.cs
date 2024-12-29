@@ -9,6 +9,7 @@ namespace Application.Features.Meals.Dtos
     public class CreateMealFoodDto
     {
         public int FoodId { get; set; }
-        public float Quantity { get; set; }
+        public float Portion { get; set; }
+        public string PortionUnit { get; set; }
     }
 }
