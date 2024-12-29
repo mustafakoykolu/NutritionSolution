@@ -10,7 +10,6 @@ namespace Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Boss,Admin,User")]
     public class MealController : Controller
     {
         private readonly IMediator _mediator;
@@ -35,7 +34,7 @@ namespace Api.Controllers
             var result = await _mediator.Send(getMealsQuery);
             return Ok(result);
         }
-
+        [Authorize(Roles = "Boss,Admin,User")]
         [HttpPost("CreateMeal")]
         public async Task<ActionResult<int>> CreateMeal([FromForm] CreateMealDto createMealRq)
         {
